@@ -21,13 +21,14 @@ public class MobWaveListener implements Listener {
 	public void InventoryOpenEvent(InventoryOpenEvent event) {
 
 		pl = (Player) event.getPlayer();
+		//イベント検知テスト　せいこう
 		pl.sendMessage("開きました");
 
 	}
 
 	@EventHandler
 	public void InventoryPickupItemEvent(InventoryPickupItemEvent event) {
-		//イベント検知テスト
+		//イベント検知テスト　失敗
 		pl.sendMessage("tt");
 
 		//pickupをキャンセル
