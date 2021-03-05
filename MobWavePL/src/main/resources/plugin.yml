@@ -1,0 +1,16 @@
+name: MobWavePL
+version: 1.0.0
+main: MobWave.MobWaveMain
+commands:
+  mobstart:
+    description: モブのスポーンを開始
+    usage: /<command>
+    default: true
+  mobstop:
+    description: モブのスポーンを開始
+    usage: /<command>
+    default: true
+  opengui:
+    description: waveGUIを開く
+    usage: /<command>
+    default: true
