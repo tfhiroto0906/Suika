@@ -12,6 +12,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class displayGUI implements CommandExecutor{
+
+	static ItemStack food2;
+	static ItemStack food;
+
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(!(sender instanceof Player)) return false;
 		Player player = (Player)sender;
@@ -20,13 +24,13 @@ public class displayGUI implements CommandExecutor{
 		Inventory inv = Bukkit.createInventory(null, 27,ChatColor.RED + "MobWaveGUI");
 
 		//Wave開始のCooKedBEEF
-		ItemStack food = new ItemStack(Material.COOKED_BEEF);
+		food = new ItemStack(Material.COOKED_BEEF);
 		ItemMeta foodMeta = food.getItemMeta();
 		foodMeta.setDisplayName(ChatColor.RED+"ウェーブを開始する");
 		food.setItemMeta(foodMeta);
 
 		//WaveStopの骨
-		ItemStack food2 = new ItemStack(Material.BONE);
+		food2 = new ItemStack(Material.BONE);
 		ItemMeta foodMeta2 = food2.getItemMeta();
 		foodMeta2.setDisplayName(ChatColor.DARK_GREEN+"ウェーブを終了する");
 		food2.setItemMeta(foodMeta2);
@@ -36,5 +40,20 @@ public class displayGUI implements CommandExecutor{
 		inv.setItem(15, food2);
 		player.openInventory(inv);
 		return true;
+	}
+
+
+	public static ItemStack SteakID() {
+
+		ItemStack steakID = food;
+		return steakID;
+
+	}
+
+	public static ItemStack BoneID() {
+
+		ItemStack BoneID = food2;
+		return BoneID;
+
 	}
 }

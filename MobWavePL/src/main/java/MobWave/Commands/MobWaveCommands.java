@@ -44,7 +44,7 @@ public class MobWaveCommands implements CommandExecutor {
 		if(label.equalsIgnoreCase("mobstop")) {
 			task.cancel();
 			hantei=0;
-			player.sendMessage("Stopします");
+			player.sendMessage("CommandでStopします");
 		}
 		return true;
 	}

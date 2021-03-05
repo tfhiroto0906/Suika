@@ -14,7 +14,7 @@ public class MobWaveTask extends BukkitRunnable{
 
 	public MobWaveTask(Player pl){
 		this.pl=pl;
-		pl.sendMessage("Startします");
+		pl.sendMessage("Commandでstartします");
 	}
 
 	@Override
