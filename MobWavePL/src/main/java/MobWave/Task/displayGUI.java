@@ -42,10 +42,10 @@ public class displayGUI implements CommandExecutor{
 		//27SlotのGUI
 		inv=null;
 		inv = Bukkit.createInventory(null, 27,ChatColor.RED + "DifficultyGUI");
-		itemMetas[2].setDisplayName(ChatColor.RED+"VeryHard");
-		itemMetas[3].setDisplayName(ChatColor.RED+"Hard");
-		itemMetas[4].setDisplayName(ChatColor.RED+"Normal");
-		itemMetas[5].setDisplayName(ChatColor.RED+"Easy");
+		itemMetas[5].setDisplayName(ChatColor.RED+"VeryHard");
+		itemMetas[4].setDisplayName(ChatColor.RED+"Hard");
+		itemMetas[3].setDisplayName(ChatColor.RED+"Normal");
+		itemMetas[2].setDisplayName(ChatColor.RED+"Easy");
 
 		for(int i=2;i<6;i++) {
 			itemIDs[i].setItemMeta(itemMetas[i]);
@@ -66,6 +66,7 @@ public class displayGUI implements CommandExecutor{
 		return invID;
 	}
 
+	//itemIDsにMaterialを入れる
 	public static ItemStack[] itemIDs() {
 		ItemStack[] itemIDs = new ItemStack[]{
 			new ItemStack(Material.COOKED_BEEF),
@@ -78,6 +79,7 @@ public class displayGUI implements CommandExecutor{
 		return itemIDs;
 	}
 
+	//ItemMetasにItemIDsのメタを入れる
 	public static ItemMeta[] itemMetas() {
 		ItemMeta[] ItemMetas = new ItemMeta[itemIDs.length];
 		for(int i=0;i<itemIDs.length;i++) {

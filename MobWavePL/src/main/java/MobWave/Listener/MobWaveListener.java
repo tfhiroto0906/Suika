@@ -7,6 +7,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
+import MobWave.MobWaveMain;
+import MobWave.Task.MobWaveTask;
 import MobWave.Task.displayGUI;
 
 public class MobWaveListener implements Listener {
@@ -24,48 +26,58 @@ public class MobWaveListener implements Listener {
 		//開いたGUIが作ったGUIなら
 		if (e.getInventory().getName().equals(displayGUI.invID().getName())) {
 			e.setCancelled(true);
-			//検出テスト
-			pl.sendMessage("kiteru");
-
-			if(hikakuIDs[0].equals(e.getCurrentItem())) {
+			//ステーキをクリックしたら
+			if(hikakuIDs[0].getType().equals(e.getCurrentItem().getType())) {
 				pl.closeInventory();
 				displayGUI.difficultyGUI(pl);
 				return;
 			}
-			//骨がクリックされたとき
-			if(hikakuIDs[1].equals(e.getCurrentItem())) {
-				//taskの終了処理
-				task.cancel();
-				hantei=true;
-				pl.sendMessage("Waveを終了します");
-				pl.closeInventory();
-				return;
+			if(hantei) {
+				//木の剣がクリックされたとき
+				if(hikakuIDs[2].getType().equals(e.getCurrentItem().getType())) {
+					pl.sendMessage("Easy");
+					pl.closeInventory();
+					task = new MobWaveTask(pl,1).runTaskTimer(MobWaveMain.getPlugin(),20,60);
+					hantei=false;
+					return;
+				}
+				//石の剣がクリックされたとき
+				if(hikakuIDs[3].getType().equals(e.getCurrentItem().getType())) {
+					pl.sendMessage("Normal");
+					pl.closeInventory();
+					task = new MobWaveTask(pl,2).runTaskTimer(MobWaveMain.getPlugin(),20,60);
+					return;
+				}
+				//鉄の件がクリックされたとき
+				if(hikakuIDs[4].getType().equals(e.getCurrentItem().getType())) {
+					pl.sendMessage("Hard");
+					pl.closeInventory();
+					task = new MobWaveTask(pl,3).runTaskTimer(MobWaveMain.getPlugin(),20,40);
+					hantei=false;
+					return;
+				}
+				//ダイヤの剣がクリックされたとき
+				if(hikakuIDs[5].getType().equals(e.getCurrentItem().getType())) {
+					pl.sendMessage("VeryHard");
+					pl.closeInventory();
+					task = new MobWaveTask(pl,4).runTaskTimer(MobWaveMain.getPlugin(),20,20);
+					hantei=false;
+					return;
+				}
 			}
-			//木の剣がクリックされたとき
-			if(hikakuIDs[2].equals(e.getCurrentItem())) {
-				pl.sendMessage("Easy");
-				pl.closeInventory();
-				return;
+			//hanteiがfalseなら
+			else {
+				pl.sendMessage("既に実行中です");
 			}
-			//石の剣がクリックされたとき
-			if(hikakuIDs[3].equals(e.getCurrentItem())) {
-				pl.sendMessage("Normal");
-				pl.closeInventory();
-				return;
-			}
-			//鉄の件がクリックされたとき
-			if(hikakuIDs[4].equals(e.getCurrentItem())) {
-				pl.sendMessage("Hard");
-				pl.closeInventory();
-				return;
-			}
-			//ダイヤの剣がクリックされたとき
-			if(hikakuIDs[5].equals(e.getCurrentItem())) {
-				pl.sendMessage("VeryHard");
-				pl.closeInventory();
-				return;
-			}
-
+		}
+		//骨がクリックされたとき
+		if(hikakuIDs[1].getType().equals(e.getCurrentItem().getType())) {
+			//taskの終了処理
+			task.cancel();
+			hantei=true;
+			pl.sendMessage("Waveを終了します");
+			pl.closeInventory();
+			return;
 		}
 		return;
 	}

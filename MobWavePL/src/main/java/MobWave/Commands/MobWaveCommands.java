@@ -33,7 +33,7 @@ public class MobWaveCommands implements CommandExecutor {
 			if(hantei==0) {
 				player.sendMessage("Commandでstartします");
 				//SpawnMobを20delay3秒間隔で呼ぶ
-				task = new MobWaveTask(player).runTaskTimer(MobWaveMain.getPlugin(),20,60); //SpawnMobを20delay3秒間隔で呼ぶ
+				task = new MobWaveTask(player,1).runTaskTimer(MobWaveMain.getPlugin(),20,60); //SpawnMobを20delay3秒間隔で呼ぶ
 				hantei=1;
 			}
 			else {

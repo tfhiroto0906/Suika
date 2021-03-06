@@ -11,9 +11,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class MobWaveTask extends BukkitRunnable{
 	Player pl=null;;
 	Creature mob = null;
+	int kazu;
 
-	public MobWaveTask(Player pl){
+	public MobWaveTask(Player pl,int kazu){
 		this.pl=pl;
+		this.kazu=kazu;
 	}
 
 	@Override
@@ -32,6 +34,8 @@ public class MobWaveTask extends BukkitRunnable{
 		lc.add(x,y,z);
 
 		//mobのスポーン
-		mob = (Creature) pl.getWorld().spawnEntity(lc, EntityType.ZOMBIE);
+		for(int i=0;i<kazu;i++) {
+			mob = (Creature) pl.getWorld().spawnEntity(lc, EntityType.ZOMBIE);
+		}
 	}
 }
