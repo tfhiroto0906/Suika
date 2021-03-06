@@ -3,60 +3,66 @@ package MobWave.Listener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
-import MobWave.MobWaveMain;
-import MobWave.Task.MobWaveTask;
+import MobWave.Task.displayGUI;
 
 public class MobWaveListener implements Listener {
 
-	BukkitTask task;
-	Player pl = null;
-	boolean hantei;
+	static Player pl;
+	static BukkitTask task;
+	static boolean hantei=true;
 
 	@EventHandler
-	public void InventoryClickEvent(InventoryClickEvent event,InventoryInteractEvent e) {
-
-		//プレイヤー取得
+	public void InventoryClickEvent(InventoryClickEvent e) {
 		pl=(Player) e.getWhoClicked();
-		//Event検知テスト
-		pl.sendMessage("t");
-		//何クリックをしたか
-		ClickType type = event.getClick();
+		ItemStack[] hikakuIDs = displayGUI.itemIDs();
 
-		//右クリか左クリをしたら
-		if(type.isRightClick() || type.isLeftClick()) {
-			//Event検知テスト
-			pl.sendMessage("tt");
-			//クリックしたslotの取得
-			int slot=event.getSlot();
-			//クリックキャンセル
+		//開いたGUIが作ったGUIなら
+		if (e.getInventory().getName().equals(displayGUI.invID().getName())) {
 			e.setCancelled(true);
-
-			//スロット１１(ステーキ)がクリックされたとき
-			if(slot==11) {
-				//既に実行済みじゃない時
-				if(hantei) {
-					pl.sendMessage("Waveを開始します");
-					task = new MobWaveTask(pl).runTaskTimer(MobWaveMain.getPlugin(), 20, 60);
-					hantei=false;
-				}
-				//既に実行済みの時
-				else {
-					pl.sendMessage("既に実行しています");
-				}
+			//ステーキがクリックされたとき
+			if(hikakuIDs[0].equals(e.getCurrentItem())) {
+				pl.closeInventory();
+				displayGUI.difficultyGUI(pl);
+				return;
 			}
-			//スロット１5(ほね)がクリックされたとき
-			else if (slot==15) {
-				//task終了
+			//骨がクリックされたとき
+			if(hikakuIDs[1].equals(e.getCurrentItem())) {
+				//taskの終了処理
 				task.cancel();
-				//実行済みの判定初期化
 				hantei=true;
 				pl.sendMessage("Waveを終了します");
+				pl.closeInventory();
+				return;
 			}
+			//木の剣がクリックされたとき
+			if(hikakuIDs[2].equals(e.getCurrentItem())) {
+				pl.sendMessage("Easy");
+				pl.closeInventory();
+				return;
+			}
+			//石の剣がクリックされたとき
+			if(hikakuIDs[3].equals(e.getCurrentItem())) {
+				pl.sendMessage("Normal");
+				pl.closeInventory();
+				return;
+			}
+			//鉄の件がクリックされたとき
+			if(hikakuIDs[4].equals(e.getCurrentItem())) {
+				pl.sendMessage("Hard");
+				pl.closeInventory();
+				return;
+			}
+			//ダイヤの剣がクリックされたとき
+			if(hikakuIDs[5].equals(e.getCurrentItem())) {
+				pl.sendMessage("VeryHard");
+				pl.closeInventory();
+				return;
+			}
+
 		}
 		return;
 	}
