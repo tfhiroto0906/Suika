@@ -19,12 +19,17 @@ public class displayGUI implements CommandExecutor{
 	static ItemMeta[] itemMetas = itemMetas();
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if(!(sender instanceof Player)) return false;
-		player = (Player)sender;
+		firstGUI((Player)sender);
+		return true;
+	}
+
+	//最初のGUI
+	public static void firstGUI(Player pl) {
+		player = pl;
 		inv=null;
 		inv = Bukkit.createInventory(null, 27,ChatColor.RED + "MobWaveGUI");
 
-		itemMetas[0].setDisplayName(ChatColor.RED+"ウェーブを開始する");
+		itemMetas[0].setDisplayName(ChatColor.RED+"ウェーブの難易度を選択する");
 		itemMetas[1].setDisplayName(ChatColor.DARK_GREEN+"ウェーブを終了する");
 		for(int i=0;i<2;i++) {
 			itemIDs[i].setItemMeta(itemMetas[i]);
@@ -34,7 +39,12 @@ public class displayGUI implements CommandExecutor{
 		inv.setItem(11, itemIDs[0]);
 		inv.setItem(15, itemIDs[1]);
 		player.openInventory(inv);
-		return true;
+	}
+
+	//invIDを返す
+	public static Inventory invID () {
+		Inventory invID = inv;
+		return invID;
 	}
 
 	public static void difficultyGUI(Player pl) {
@@ -42,28 +52,24 @@ public class displayGUI implements CommandExecutor{
 		//27SlotのGUI
 		inv=null;
 		inv = Bukkit.createInventory(null, 27,ChatColor.RED + "DifficultyGUI");
+		itemMetas[6].setDisplayName("back");
 		itemMetas[5].setDisplayName(ChatColor.RED+"VeryHard");
 		itemMetas[4].setDisplayName(ChatColor.RED+"Hard");
 		itemMetas[3].setDisplayName(ChatColor.RED+"Normal");
 		itemMetas[2].setDisplayName(ChatColor.RED+"Easy");
 
-		for(int i=2;i<6;i++) {
+		for(int i=2;i<7;i++) {
 			itemIDs[i].setItemMeta(itemMetas[i]);
 		}
 
 		//アイテムの配置
+		inv.setItem(26, itemIDs[6]);
 		inv.setItem(16, itemIDs[5]);
 		inv.setItem(14, itemIDs[4]);
 		inv.setItem(12, itemIDs[3]);
 		inv.setItem(10, itemIDs[2]);
 		player.openInventory(inv);
 		return;
-	}
-
-
-	public static Inventory invID () {
-		Inventory invID = inv;
-		return invID;
 	}
 
 	//itemIDsにMaterialを入れる
@@ -75,6 +81,7 @@ public class displayGUI implements CommandExecutor{
 			new ItemStack(Material.STONE_SWORD),
 			new ItemStack(Material.IRON_SWORD),
 			new ItemStack(Material.DIAMOND_SWORD),
+			new ItemStack(Material.ARROW),
 			};
 		return itemIDs;
 	}
@@ -87,6 +94,9 @@ public class displayGUI implements CommandExecutor{
 		}
 		return ItemMetas;
 	}
+
+
 }
+
 
 
