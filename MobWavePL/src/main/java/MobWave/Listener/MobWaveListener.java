@@ -14,16 +14,19 @@ public class MobWaveListener implements Listener {
 	static Player pl;
 	static BukkitTask task;
 	static boolean hantei=true;
+	//ItemStack配列の取得 displayGUIクラスから
+	ItemStack[] hikakuIDs = displayGUI.itemIDs();
 
 	@EventHandler
 	public void InventoryClickEvent(InventoryClickEvent e) {
 		pl=(Player) e.getWhoClicked();
-		ItemStack[] hikakuIDs = displayGUI.itemIDs();
 
 		//開いたGUIが作ったGUIなら
 		if (e.getInventory().getName().equals(displayGUI.invID().getName())) {
 			e.setCancelled(true);
-			//ステーキがクリックされたとき
+			//検出テスト
+			pl.sendMessage("kiteru");
+
 			if(hikakuIDs[0].equals(e.getCurrentItem())) {
 				pl.closeInventory();
 				displayGUI.difficultyGUI(pl);
