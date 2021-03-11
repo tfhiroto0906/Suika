@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import conSQL.task.mysqlSetterGetter;
 import net.md_5.bungee.api.ChatColor;
 
 
@@ -25,11 +26,13 @@ public class SQLMain extends JavaPlugin implements Listener{
 		this.getServer().getPluginManager().registerEvents(new mysqlSetterGetter(), this);
 	}
 
+	//コンフィグをロード
 	public void loadConfig() {
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 	}
 
+	//コンフィグからロード
 	public void mysqlSetup(){
 		host = this.getConfig().getString("host");
 		port=this.getConfig().getInt("port");
