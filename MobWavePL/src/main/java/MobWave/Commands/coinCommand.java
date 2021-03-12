@@ -33,7 +33,9 @@ public class coinCommand implements CommandExecutor {
 		//optionがなければ所持コインを表示
 		if(option.length==0) {
 			int coins = getCoin();
-			player.sendMessage(ChatColor.YELLOW + "You have " + coins +"coins");
+			if(coins!=-99999999) {
+				player.sendMessage(ChatColor.YELLOW + "You have " + coins +"coins");
+			}
 			return;
 		}
 
