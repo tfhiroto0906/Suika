@@ -1,9 +1,12 @@
 package MobWave.Listener;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
@@ -11,18 +14,17 @@ import org.bukkit.scheduler.BukkitTask;
 import MobWave.MobWaveMain;
 import MobWave.Commands.displayGUICommand;
 import MobWave.Task.MobWaveTask;
+import conSQL.task.coinTask;
+import net.md_5.bungee.api.ChatColor;
 
 public class MobWaveListener implements Listener {
-
-	static Player pl;
-	static BukkitTask task;
 	static boolean hantei=true;
+	static BukkitTask task;
 	//ItemStack配列の取得 displayGUIクラスから
 	ItemStack[] hikakuIDs = displayGUICommand.itemIDs();
-
 	@EventHandler
 	public void InventoryClickEvent(InventoryClickEvent e) {
-		pl=(Player) e.getWhoClicked();
+		Player pl=(Player) e.getWhoClicked();
 
 		//開いたGUIが作ったGUIなら
 		if (e.getInventory().getName().equals(displayGUICommand.invID().getName())) {
@@ -100,5 +102,19 @@ public class MobWaveListener implements Listener {
 				pl.sendMessage("既に実行中です");
 			}
 		}
+	}
+
+	@EventHandler
+	public void mobDeathEvent(EntityDeathEvent e) {
+        Entity dead = e.getEntity();
+        Entity killer = e.getEntity().getKiller();
+        //Playerがmobを倒したとき
+        if (killer instanceof Player) {
+        	//倒したmobがゾンビなら+10coins
+        	if(dead.getType().equals(EntityType.ZOMBIE)) {
+        		coinTask.updateCoins(10,((Player) killer).getPlayer(),true);
+        		((Player) killer).getPlayer().sendMessage(ChatColor.YELLOW + "+10coin");
+        	}
+        }
 	}
 }
