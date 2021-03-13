@@ -28,18 +28,18 @@ public class SQLMain extends JavaPlugin implements Listener{
 
 	//コンフィグをロード
 	public void loadConfig() {
-		this.getConfig().options().copyDefaults(true);
-		this.saveDefaultConfig();
+		getConfig().options().copyDefaults(true);
+		saveDefaultConfig();
 	}
 
 	//コンフィグからロード
 	public void mysqlSetup(){
-		host = this.getConfig().getString("host");
-		port=this.getConfig().getInt("port");
-		database=this.getConfig().getString("database");
-		username=this.getConfig().getString("username");
-		password=this.getConfig().getString("password");
-		table=this.getConfig().getString("table");
+		host = getConfig().getString("host");
+		port=getConfig().getInt("port");
+		database=getConfig().getString("database");
+		username=getConfig().getString("username");
+		password=getConfig().getString("password");
+		table=getConfig().getString("table");
 		getLogger().info(table);
 		try {
 
@@ -49,8 +49,8 @@ public class SQLMain extends JavaPlugin implements Listener{
 				}
 				Class.forName("com.mysql.jdbc.Driver");
 
-				setConnection(DriverManager.getConnection("jdbc:mysql://" + this.host + ":"+ this.port + "/"
-						+ this.database,this.username,this.password));
+				setConnection(DriverManager.getConnection("jdbc:mysql://" + host + ":"+ port + "/"
+						+ database,username,password));
 
 				Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN+"MYSQL CONNECTED");
 			}
