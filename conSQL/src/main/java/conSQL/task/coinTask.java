@@ -5,12 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import conSQL.SQLMain;
 
 public class coinTask {
 	static SQLMain plugin = SQLMain.getPlugin(SQLMain.class);
+	static FileConfiguration config = plugin.getConfig();
 	String[] option = new String[3];
 	Player player;
 	public static int getCoin(Player pl) {
@@ -18,7 +20,7 @@ public class coinTask {
 		PreparedStatement statement;
 		try {
 			statement = plugin.getConnection()
-					.prepareStatement("SELECT COINS FROM " + plugin.table  + " WHERE UUID=?");
+					.prepareStatement("SELECT COINS FROM " + config.getString("database.table")+ " WHERE UUID=?");
 			statement.setString(1,uuid.toString());
 			ResultSet results = statement.executeQuery();
 			results.next();
@@ -39,7 +41,7 @@ public class coinTask {
 		}
 		try {
 			PreparedStatement statement = plugin.getConnection()
-					.prepareStatement("UPDATE " + plugin.table  + " SET COINS=? WHERE UUID=?");
+					.prepareStatement("UPDATE " + config.getString("database.table")  + " SET COINS=? WHERE UUID=?");
 			statement.setInt(1,setcoins);
 			statement.setString(2,uuid.toString());
 			statement.executeUpdate();
