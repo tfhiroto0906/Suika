@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import MobWave.Task.MobWaveGUITask;
-import MobWave.Task.shopTask;
+import MobWave.Task.shopGUITask;
 
 public class MobWaveGUICommand implements CommandExecutor{
 	static Player player;
@@ -15,12 +15,14 @@ public class MobWaveGUICommand implements CommandExecutor{
 		if(sender instanceof Player) {
 			player = (Player)sender;
 			try {
+				//commandでwaveが指定されたとき
 				if(args[0].equalsIgnoreCase("wave")) {
 					MobWaveGUITask.firstGUI(player);
 					return true;
 				}
+				//commandでshopが指定されたとき
 				else if(args[0].equalsIgnoreCase("shop")) {
-					shopTask.shopGUI(player);
+					shopGUITask.shopGUI(player);
 					return true;
 				}
 			}catch(ArrayIndexOutOfBoundsException e) {

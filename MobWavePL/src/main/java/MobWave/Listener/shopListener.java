@@ -14,10 +14,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import MobWave.Task.MobWaveGUITask;
-import MobWave.Task.shopTask;
+import MobWave.Task.shopGUITask;
 
 public class shopListener implements Listener {
 
+	//村人を殴れなくする。
 	@EventHandler
 	public void villagerDamage(EntityDamageByEntityEvent event) {
 		Entity entity=event.getEntity();
@@ -38,7 +39,7 @@ public class shopListener implements Listener {
 			//右クリされたのがshopなら
 			if(v.getCustomName().equalsIgnoreCase("§5§lSHOP")) {
 				Player player = e.getPlayer();
-				shopTask.shopGUI(player);
+				shopGUITask.shopGUI(player);
 			}
 			//右クリされたのがWaveなら
 			else if(v.getCustomName().equalsIgnoreCase("§4§lWAVE")) {
@@ -52,7 +53,7 @@ public class shopListener implements Listener {
 	public void InventoryClickEvent(InventoryClickEvent e) {
 		Player pl=(Player) e.getWhoClicked();
 		//開いたGUIが作ったGUIなら
-		if (e.getInventory().getName().equals(shopTask.invID().getName())) {
+		if (e.getInventory().getName().equals(shopGUITask.invID().getName())) {
 			e.setCancelled(true);
 		//何もないところをクリックしたときreturn
 			if(e.getCurrentItem()==null) {
@@ -64,12 +65,12 @@ public class shopListener implements Listener {
 			}
 			else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.AQUA + "" + ChatColor.BOLD + "itemを購入する")) {
 				pl.closeInventory();
-				shopTask.buyGUI(pl);
+				shopGUITask.buyGUI(pl);
 				return;
 			}
 			else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GOLD + "" + ChatColor.BOLD +"itemを売る")) {
 				pl.closeInventory();
-				shopTask.sellGUI(pl);
+				shopGUITask.sellGUI(pl);
 				return;
 			}
 		}

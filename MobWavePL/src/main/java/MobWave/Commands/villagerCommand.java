@@ -5,7 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import MobWave.Task.shopTask;
+import MobWave.Task.villagerTask;
 
 public class villagerCommand implements CommandExecutor{
 	Player player;
@@ -13,22 +13,21 @@ public class villagerCommand implements CommandExecutor{
 		if(sender instanceof Player) {
 			player = (Player)sender;
 			try {
-
 				if(args[0].equalsIgnoreCase("spawn")) {
+					//spawn shopが指定されたとき
 					if(args[1].equalsIgnoreCase("shop")) {
-						shopTask.spawnShop(player);
+						villagerTask.spawnShop(player);
 						return true;
 					}
+					//spawn waveが指定されたとき
 					else if(args[1].equalsIgnoreCase("wave")){
-						shopTask.spawnWave(player);
+						villagerTask.spawnWave(player);
 						return true;
 					}
 				}
 			}catch(ArrayIndexOutOfBoundsException e) {
 				player.sendMessage("/villager spawn <wave,shop>");
 			}
-
-
 
 			return true;
 		}
