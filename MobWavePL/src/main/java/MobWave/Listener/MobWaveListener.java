@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
 import MobWave.MobWaveMain;
-import MobWave.Commands.displayGUICommand;
+import MobWave.Task.MobWaveGUITask;
 import MobWave.Task.MobWaveTask;
 import conSQL.task.coinTask;
 import net.md_5.bungee.api.ChatColor;
@@ -21,13 +21,13 @@ public class MobWaveListener implements Listener {
 	static boolean hantei=true;
 	static BukkitTask task;
 	//ItemStack配列の取得 displayGUIクラスから
-	ItemStack[] hikakuIDs = displayGUICommand.itemIDs();
+	ItemStack[] hikakuIDs = MobWaveGUITask.itemIDs();
 	@EventHandler
 	public void InventoryClickEvent(InventoryClickEvent e) {
 		Player pl=(Player) e.getWhoClicked();
 
 		//開いたGUIが作ったGUIなら
-		if (e.getInventory().getName().equals(displayGUICommand.invID().getName())) {
+		if (e.getInventory().getName().equals(MobWaveGUITask.invID().getName())) {
 			e.setCancelled(true);
 			//何もないところをクリックしたときreturn
 			if(e.getCurrentItem()==null) {
@@ -40,7 +40,7 @@ public class MobWaveListener implements Listener {
 			//ステーキをクリックしたら
 			if(hikakuIDs[0].getType().equals(e.getCurrentItem().getType())) {
 				pl.closeInventory();
-				displayGUICommand.difficultyGUI(pl);
+				MobWaveGUITask.difficultyGUI(pl);
 				return;
 			}
 			//既に実行されていないか
@@ -56,6 +56,7 @@ public class MobWaveListener implements Listener {
 				if(hikakuIDs[3].getType().equals(e.getCurrentItem().getType())) {
 					pl.sendMessage("難易度:NormalでWaveを開始します");
 					task = new MobWaveTask(pl,2).runTaskTimer(MobWaveMain.getPlugin(),20,60);
+					hantei=false;
 					return;
 				}
 				//鉄の件がクリックされたとき
@@ -75,7 +76,7 @@ public class MobWaveListener implements Listener {
 				//hantei trueの時にbackをクリック
 				if(hikakuIDs[6].getType().equals(e.getCurrentItem().getType())) {
 					pl.closeInventory();
-					displayGUICommand.firstGUI(pl);
+					MobWaveGUITask.firstGUI(pl);
 					return;
 				}
 				if(hikakuIDs[1].getType().equals(e.getCurrentItem().getType())) {
@@ -94,7 +95,7 @@ public class MobWaveListener implements Listener {
 			//hantei falseの時にbackをクリック
 			else if(hikakuIDs[6].getType().equals(e.getCurrentItem().getType())) {
 				pl.closeInventory();
-				displayGUICommand.firstGUI(pl);
+				MobWaveGUITask.firstGUI(pl);
 				return;
 			}
 			//hanteiがfalseなら

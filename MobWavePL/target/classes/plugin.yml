@@ -11,6 +11,10 @@ commands:
     usage: /<command>
     default: true
   coin:
-    description: waveGUIを開く
+    description: coin操作コマンド
+    usage: /<command>
+    default: true
+  villager:
+    description: shop操作コマンド
     usage: /<command>
     default: true
